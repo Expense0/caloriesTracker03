@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.CaloriesTracker03" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#f9f9f9</item>
+        <item name="android:navigationBarColor">#f9f9f9</item>
+        <item name="android:windowBackground">#f9f9f9</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#654ea3</item>
+    </style>
+
+</resources>

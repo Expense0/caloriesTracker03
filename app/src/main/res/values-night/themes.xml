@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DailyCalories" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#06091d</item>
+        <item name="android:navigationBarColor">#06091d</item>
+        <item name="android:windowBackground">#06091d</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#654ea3</item>
+    </style>
+
+</resources>

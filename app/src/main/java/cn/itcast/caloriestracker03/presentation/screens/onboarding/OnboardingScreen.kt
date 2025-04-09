@@ -1,0 +1,279 @@
+package cn.itcast.caloriestracker03.presentation.screens.onboarding
+
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import cn.itcast.caloriestracker03.R
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import cn.itcast.caloriestracker03.presentation.TabItem
+import cn.itcast.caloriestracker03.presentation.screens.onboarding.pager_screens.ActivityLevelPagerScreen
+import cn.itcast.caloriestracker03.presentation.screens.onboarding.pager_screens.AgePagerScreen
+import cn.itcast.caloriestracker03.presentation.screens.onboarding.pager_screens.GenderPagerScreen
+import cn.itcast.caloriestracker03.presentation.screens.onboarding.pager_screens.GoalPagerScreen
+import cn.itcast.caloriestracker03.presentation.screens.onboarding.pager_screens.HeightPagerScreen
+import cn.itcast.caloriestracker03.presentation.screens.onboarding.pager_screens.RecommendedDailyCaloriesIntake
+import cn.itcast.caloriestracker03.presentation.screens.onboarding.pager_screens.WeightPagerScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.pager.HorizontalPager
+
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun OnboardingScreen(
+    viewModel: OnboardingViewModel,
+    onNavigateForward: () -> Unit,
+) {
+
+    val state = viewModel.userInfoState
+
+    val recommendedDailyIntakeState = viewModel.recommendedDailyIntakeState
+
+    val pagerState = rememberPagerState()
+
+    val snackbarHostState = remember { SnackbarHostState() } // Material3 的 SnackbarHostState
+
+//    val scaffoldState = rememberScaffoldState()
+
+    val coroutineScope = rememberCoroutineScope()
+
+    val pagerScreens = listOf(
+        TabItem(
+            title = stringResource(R.string.title_goal),
+            screen = {
+                GoalPagerScreen(
+                    goalType = state.goalType,
+                    onNextClicked = { goalType ->
+                        viewModel.onEvent(OnboardingEvent.SaveGoal(goalType))
+                    },
+                )
+            },
+        ),
+        TabItem(
+            title = stringResource(R.string.title_gender),
+            screen = {
+                GenderPagerScreen(
+                    gender = state.gender,
+                    onNextClicked = { gender ->
+                        viewModel.onEvent(OnboardingEvent.SaveGender(gender))
+
+                    },
+                    onPreviousClicked = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    }
+                )
+            }
+        ),
+        TabItem(
+            title = stringResource(R.string.title_age),
+            screen = {
+                AgePagerScreen(
+                    age = state.age,
+                    onNextClicked = { age ->
+                        viewModel.onEvent(OnboardingEvent.SaveAge(age))
+                    },
+                    onPreviousClicked = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    }
+                )
+            }
+        ),
+        TabItem(
+            title = stringResource(R.string.title_height),
+            screen = {
+                HeightPagerScreen(
+                    height = state.height,
+                    onNextClicked = { height ->
+                        viewModel.onEvent(OnboardingEvent.SaveHeight(height))
+                    },
+                    onPreviousClicked = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    }
+                )
+            }
+        ),
+        TabItem(
+            title = stringResource(R.string.title_weight),
+            screen = {
+                WeightPagerScreen(
+                    weight = state.weight,
+                    onNextClicked = { weight ->
+                        viewModel.onEvent(OnboardingEvent.SaveWeight(weight))
+                    },
+                    onPreviousClicked = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    }
+                )
+            }
+        ),
+        TabItem(
+            title = stringResource(R.string.title_activity_level),
+            screen = {
+                ActivityLevelPagerScreen(
+                    activityLevel = state.activityLevel,
+                    onNextClicked = { activityLevel ->
+                        viewModel.onEvent(OnboardingEvent.SaveActivityLevel(activityLevel))
+                    },
+                    onPreviousClicked = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    }
+                )
+            }
+        ),
+        TabItem(
+            title = stringResource(R.string.title_recom_cal_intake),
+            screen = {
+                RecommendedDailyCaloriesIntake(
+                    fat = recommendedDailyIntakeState.recommendedFat,
+                    proteins = recommendedDailyIntakeState.recommendedProteins,
+                    carbs = recommendedDailyIntakeState.recommendedCarbs,
+                    calories = recommendedDailyIntakeState.recommendedCals,
+                    goalType = state.goalType,
+                    onSaveClicked = { fat: Float, proteins: Float, carbs: Float, calories: Int ->
+                        viewModel.onEvent(
+                            OnboardingEvent.SaveDailyCaloriesIntake(
+                                fat = fat,
+                                proteins = proteins,
+                                carbs = carbs,
+                                calories = calories
+                            )
+                        )
+                    },
+                    onPreviousClicked = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    },
+                )
+            }
+        ),
+    )
+
+    BackHandler(enabled = pagerState.currentPage != 0) {
+        coroutineScope.launch {
+            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+        }
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is OnboardingUiEvent.NavigateNext -> {
+                    onNavigateForward()
+                }
+                is OnboardingUiEvent.ShowNextPage -> {
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                }
+                is OnboardingUiEvent.ShowPreviousPage -> {
+                    pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                }
+                is OnboardingUiEvent.ShowSnackbar -> {
+                    // 使用新的 snackbarHostState
+                    coroutineScope.launch {
+                        val job = launch {
+                            // Material3 的 Snackbar 参数
+                            snackbarHostState.showSnackbar(
+                                message = uiEvent.message,
+                                duration = SnackbarDuration.Indefinite // 仍然可用
+                            )
+                        }
+                        delay(1000)
+                        job.cancel()
+                    }
+                }
+            }
+        }
+    }
+
+    Scaffold (
+        snackbarHost = {
+            // 2. 绑定 SnackbarHost 到 Scaffold
+            SnackbarHost(hostState = snackbarHostState)
+        }
+    ){ innerPadding ->
+        Column(
+            modifier = Modifier.padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Indicators(size = pagerState.pageCount, index = pagerState.currentPage)
+            }
+            HorizontalPager(
+                count = pagerScreens.size,
+                state = pagerState,
+                userScrollEnabled = false
+            ) { pagerIndex ->
+                pagerScreens[pagerIndex].screen()
+            }
+        }
+    }
+
+}
+
+
+@Composable
+fun BoxScope.Indicators(size: Int, index: Int) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.align(Alignment.Center)
+    ) {
+        repeat(size) {
+            Indicator(isSelected = it == index)
+        }
+    }
+}
+
+
+@Composable
+fun Indicator(isSelected: Boolean) {
+    val width = animateDpAsState(
+        targetValue = if (isSelected) 25.dp else 10.dp,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
+    )
+    Box(
+        modifier = Modifier
+            .height(10.dp)
+            .width(width.value)
+            .clip(CircleShape)
+            .background(
+                if (isSelected) MaterialTheme.colorScheme.onBackground
+                else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
+            )
+    )
+}

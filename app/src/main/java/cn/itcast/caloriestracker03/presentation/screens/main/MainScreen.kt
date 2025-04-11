@@ -15,6 +15,7 @@ import cn.itcast.caloriestracker03.presentation.navigation.graph.Graph
 import cn.itcast.caloriestracker03.presentation.navigation.graph.RootNavGraph
 import cn.itcast.caloriestracker03.presentation.screens.analytics.AnalyticsViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.add_meal.AddMealViewModel
+import cn.itcast.caloriestracker03.presentation.screens.analytics.cameraScreen.CameraViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.edit_meal.EditMealViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.meal_detail.MealDetailViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.search_product.SearchProductViewModel
@@ -32,7 +33,8 @@ fun MainScreen(
     homeViewModel: HomeViewModel,
     analyticsViewModel: AnalyticsViewModel,
     addMealViewModel: AddMealViewModel,
-    searchProductViewModel: SearchProductViewModel,
+//    searchProductViewModel: SearchProductViewModel,
+    cameraViewModel: CameraViewModel,
     editMealViewModel: EditMealViewModel,
     mealDetailViewModel: MealDetailViewModel,
     dailyCalorieIntakeViewModel: DailyCalorieIntakeViewModel,
@@ -94,7 +96,8 @@ fun MainScreen(
             caloriesCalculatorViewModel = caloriesCalculatorViewModel,
             settingsViewModel = settingsViewModel,
             addMealViewModel = addMealViewModel,
-            searchProductViewModel = searchProductViewModel,
+//            searchProductViewModel = searchProductViewModel,
+            cameraViewModel = cameraViewModel,
             editMealViewModel = editMealViewModel,
             mealDetailViewModel = mealDetailViewModel
         )

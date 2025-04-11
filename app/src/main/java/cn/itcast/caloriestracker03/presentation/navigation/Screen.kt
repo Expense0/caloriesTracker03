@@ -21,7 +21,9 @@ sealed class Screen(protected val route: String, vararg params: String) {
 
     object OnboardingScreen : Screen(route = ONBOARDING_SCREEN_ROUTE)
 
-    object SearchProductScreen : Screen(route = SEARCH_PRODUCT_SCREEN_ROUTE)
+//    object SearchProductScreen : Screen(route = SEARCH_PRODUCT_SCREEN_ROUTE)
+
+    object CameraScreen : Screen(route = CAMERA_SCREEN_ROUTE)
 
     object AddMealScreen : Screen(route = ADD_MEAL_SCREEN_ROUTE, DATE_ARG) {
         fun getRouteWithArgs(date: String): String = route.appendParams(
@@ -52,7 +54,8 @@ sealed class Screen(protected val route: String, vararg params: String) {
         private const val CALORIE_CALCULATOR_SCREEN_ROUTE = "calorie_calculator"
         private const val ONBOARDING_SCREEN_ROUTE = "onboarding"
 
-        private const val SEARCH_PRODUCT_SCREEN_ROUTE = "search_product"
+//        private const val SEARCH_PRODUCT_SCREEN_ROUTE = "search_product"
+        private const val CAMERA_SCREEN_ROUTE = "camera_meal"
         private const val EDIT_MEAL_SCREEN_ROUTE = "edit_meal"
         private const val ADD_MEAL_SCREEN_ROUTE = "add_meal"
         private const val MEAL_DETAIL_SCREEN_ROUTE = "meal_detail"

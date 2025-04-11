@@ -20,6 +20,8 @@ import cn.itcast.caloriestracker03.presentation.screens.analytics.AnalyticsScree
 import cn.itcast.caloriestracker03.presentation.screens.analytics.AnalyticsViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.add_meal.AddMealScreen
 import cn.itcast.caloriestracker03.presentation.screens.analytics.add_meal.AddMealViewModel
+import cn.itcast.caloriestracker03.presentation.screens.analytics.cameraScreen.CameraScreen
+import cn.itcast.caloriestracker03.presentation.screens.analytics.cameraScreen.CameraViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.meal_detail.MealDetailScreen
 import cn.itcast.caloriestracker03.presentation.screens.analytics.meal_detail.MealDetailViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.search_product.SearchProductScreen
@@ -45,7 +47,8 @@ fun NavGraphBuilder.mainNavGraph(
     homeViewModel: HomeViewModel,
     analyticsViewModel: AnalyticsViewModel,
     addMealViewModel: AddMealViewModel,
-    searchProductViewModel: SearchProductViewModel,
+//    searchProductViewModel: SearchProductViewModel,
+    cameraViewModel: CameraViewModel,
     mealDetailViewModel: MealDetailViewModel,
     editMealViewModel: EditMealViewModel,
     dailyCalorieIntakeViewModel: DailyCalorieIntakeViewModel,
@@ -63,7 +66,8 @@ fun NavGraphBuilder.mainNavGraph(
         analyticsScreenNavGraph(
             analyticsViewModel = analyticsViewModel,
             addMealViewModel = addMealViewModel,
-            searchProductViewModel = searchProductViewModel,
+//            searchProductViewModel = searchProductViewModel,
+            cameraViewModel = cameraViewModel,
             mealDetailViewModel = mealDetailViewModel,
             editMealViewModel = editMealViewModel,
             navState = navState
@@ -98,10 +102,11 @@ fun NavGraphBuilder.homeScreenNavGraph(
 fun NavGraphBuilder.analyticsScreenNavGraph(
     analyticsViewModel: AnalyticsViewModel,
     addMealViewModel: AddMealViewModel,
-    searchProductViewModel: SearchProductViewModel,
+//    searchProductViewModel: SearchProductViewModel,
     mealDetailViewModel: MealDetailViewModel,
     editMealViewModel: EditMealViewModel,
     navState: NavigationState,
+    cameraViewModel: CameraViewModel,
 ) {
     navigation(
         startDestination = Screen.AnalyticsScreen.fullRoute,
@@ -157,14 +162,14 @@ fun NavGraphBuilder.analyticsScreenNavGraph(
                 onNavigateToSearchFood = { callback ->
                     Log.d("MainNavGraph", "onNavigateToSearchFood called")
                     navState.navHostController.navigateForResult(
-                        Screen.SearchProductScreen.fullRoute,
+                        Screen.CameraScreen.fullRoute,
                         navResultCallback = callback
                     )
                 }
             )
         }
         composable(
-            route = Screen.SearchProductScreen.fullRoute,
+            route = Screen.CameraScreen.fullRoute,
             enterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { it }, animationSpec = tween(500)
@@ -186,8 +191,8 @@ fun NavGraphBuilder.analyticsScreenNavGraph(
                 ).plus(fadeOut(tween(500)))
             }
         ) {
-            SearchProductScreen(
-                viewModel = searchProductViewModel,
+            CameraScreen(
+                viewModel = cameraViewModel,
                 onConfirm = { mealFoodProduct ->
                     // 添加日志：记录用户确认添加产品
                     Log.d("MainNavGraph", "User confirmed searching product: ${mealFoodProduct.name}")
@@ -236,7 +241,7 @@ fun NavGraphBuilder.analyticsScreenNavGraph(
                 },
                 onNavigateToSearchFood = { callback ->
                     navState.navHostController.navigateForResult(
-                        Screen.SearchProductScreen.fullRoute,
+                        Screen.CameraScreen.fullRoute,
                         navResultCallback = callback
                     )
                 }
@@ -278,7 +283,7 @@ fun NavGraphBuilder.analyticsScreenNavGraph(
                 },
                 onNavigateToSearchFood = { callback ->
                     navState.navHostController.navigateForResult(
-                        Screen.SearchProductScreen.fullRoute,
+                        Screen.CameraScreen.fullRoute,
                         navResultCallback = callback
                     )
                 }

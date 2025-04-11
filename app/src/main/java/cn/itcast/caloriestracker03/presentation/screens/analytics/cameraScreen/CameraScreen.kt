@@ -2,6 +2,7 @@ package cn.itcast.caloriestracker03.presentation.screens.analytics.cameraScreen
 
 import android.Manifest
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -33,7 +34,7 @@ fun CameraScreen(
         permission = Manifest.permission.CAMERA
     )
 
-    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+//    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         HandleCameraPermission(
@@ -41,8 +42,11 @@ fun CameraScreen(
             onPermissionGranted = {
                 CameraPreview(
                     viewModel = viewModel,
-                    onImageCaptured = { uri ->
-                        capturedImageUri = uri
+                    onImageCaptured = { mealFoodProduct ->
+                        // 处理 MealFoodProduct 对象
+                        Log.d("CameraScreen", "Received MealFoodProduct: $mealFoodProduct")
+                        // 这里可以添加导航到下一个屏幕的逻辑
+
                     }
                 )
             }
@@ -62,4 +66,3 @@ fun CameraScreen(
         }
     }
 }
-

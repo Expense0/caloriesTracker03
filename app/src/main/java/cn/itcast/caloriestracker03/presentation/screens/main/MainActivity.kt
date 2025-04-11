@@ -35,6 +35,8 @@ import cn.itcast.caloriestracker03.presentation.screens.analytics.AnalyticsViewM
 import cn.itcast.caloriestracker03.presentation.screens.analytics.AnalyticsViewModelFactory
 import cn.itcast.caloriestracker03.presentation.screens.analytics.add_meal.AddMealViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.add_meal.AddMealViewModelFactory
+import cn.itcast.caloriestracker03.presentation.screens.analytics.cameraScreen.CameraViewModel
+import cn.itcast.caloriestracker03.presentation.screens.analytics.cameraScreen.CameraViewModelFactory
 import cn.itcast.caloriestracker03.presentation.screens.analytics.edit_meal.EditMealViewModel
 import cn.itcast.caloriestracker03.presentation.screens.analytics.edit_meal.EditMealViewModelFactory
 import cn.itcast.caloriestracker03.presentation.screens.analytics.meal_detail.MealDetailViewModel
@@ -67,12 +69,13 @@ class MainActivity : ComponentActivity() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var analyticsViewModel: AnalyticsViewModel
     private lateinit var addMealViewModel: AddMealViewModel
-    private lateinit var searchProductViewModel: SearchProductViewModel
+//    private lateinit var searchProductViewModel: SearchProductViewModel
     private lateinit var editMealViewModel: EditMealViewModel
     private lateinit var mealDetailViewModel: MealDetailViewModel
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var caloriesCalculatorViewModel: CaloriesCalculatorViewModel
     private lateinit var dailyCalorieIntakeViewModel: DailyCalorieIntakeViewModel
+    private lateinit var cameraViewModel: CameraViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,8 +135,11 @@ class MainActivity : ComponentActivity() {
         val factoryAddMeal = AddMealViewModelFactory(mealRepository,validateMeal,application)
         addMealViewModel = ViewModelProvider(this,factoryAddMeal)[AddMealViewModel::class.java]
 
-        val factorySearchProduct = SearchProductViewModelFactory(foodProductRepository)
-        searchProductViewModel = ViewModelProvider(this,factorySearchProduct)[SearchProductViewModel::class.java]
+//        val factorySearchProduct = SearchProductViewModelFactory(foodProductRepository)
+//        searchProductViewModel = ViewModelProvider(this,factorySearchProduct)[SearchProductViewModel::class.java]
+
+        val factoryCamera = CameraViewModelFactory(foodProductRepository)
+        cameraViewModel = ViewModelProvider(this,factoryCamera)[CameraViewModel::class.java]
 
         val factoryEditMeal = EditMealViewModelFactory(mealRepository, foodProductRepository,validateMeal,application)
         editMealViewModel = ViewModelProvider(this,factoryEditMeal)[EditMealViewModel::class.java]
@@ -182,7 +188,8 @@ class MainActivity : ComponentActivity() {
                             dailyCalorieIntakeViewModel = dailyCalorieIntakeViewModel,
                             analyticsViewModel = analyticsViewModel,
                             addMealViewModel = addMealViewModel,
-                            searchProductViewModel = searchProductViewModel,
+                            cameraViewModel = cameraViewModel,
+//                            searchProductViewModel = searchProductViewModel,
                             editMealViewModel = editMealViewModel,
                             mealDetailViewModel = mealDetailViewModel,
                             homeViewModel = homeViewModel

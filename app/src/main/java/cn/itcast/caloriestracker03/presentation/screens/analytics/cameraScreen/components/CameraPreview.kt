@@ -16,12 +16,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import cn.itcast.caloriestracker03.domain.model.meal.MealFoodProduct
 import cn.itcast.caloriestracker03.presentation.screens.analytics.cameraScreen.CameraViewModel
 
 @Composable
 fun CameraPreview(
     viewModel: CameraViewModel,
-    onImageCaptured: (Uri) -> Unit,
+    onImageCaptured: (MealFoodProduct) -> Unit,
 ){
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -32,7 +33,6 @@ fun CameraPreview(
             context = context,
             lifecycleOwner = lifecycleOwner,
             previewView = previewView,
-            onImageCaptured = onImageCaptured
         )
         onDispose {
             viewModel.onCleared()

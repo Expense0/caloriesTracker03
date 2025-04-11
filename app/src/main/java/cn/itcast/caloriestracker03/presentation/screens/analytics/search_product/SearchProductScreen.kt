@@ -52,7 +52,7 @@ fun SearchProductScreen(
                 productInfo = it,
                 onConfirm = { mealFoodProduct ->
                     onConfirm(mealFoodProduct)
-//                    // 添加日志：记录用户确认添加产品
+                    // 添加日志：记录用户确认添加产品
                     Log.d("SearchProductScreen", "User confirmed adding product: ${mealFoodProduct.name}")
                     viewModel.onEvent(SearchProductEvent.HideAddProductDialog)
                 },

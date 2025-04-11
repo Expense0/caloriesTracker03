@@ -1,7 +1,10 @@
 package cn.itcast.caloriestracker03.data.remote
 
 import cn.itcast.caloriestracker03.data.remote.model.ProductsSearchResponseDto
+import cn.itcast.caloriestracker03.domain.model.food_product.FoodProductInfoWithGram
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface OpenFoodApiService {
@@ -13,8 +16,12 @@ interface OpenFoodApiService {
         @Query("page_size") pageSize: Int = 50,
     ): ProductsSearchResponseDto
 
+    @POST("analyze")
+    fun searchProduct(@Body imageUri: String): FoodProductInfoWithGram
+
     companion object {
         const val BASE_URL = "https://world.openfoodfacts.org/"
 
     }
+
 }
